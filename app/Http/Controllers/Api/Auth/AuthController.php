@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
     /**
      * @OA\Post (
      *     path="/api/auth/register",
@@ -48,7 +48,7 @@ class AuthController extends Controller
         $this->validate($request, [
             'name' => 'required|min:4',
             'email' => 'required|email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         $user = User::create([
@@ -80,18 +80,19 @@ class AuthController extends Controller
      *     @OA\Response(response="200", description="Login a user.", @OA\JsonContent()),
      * )
      */
-    public function login(AuthLoginRequest $request)
+    public function login(Request $request)
     {
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
-
-        if (auth()->attempt($data)) {
-            $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
-            return response()->json(['token' => $token->token], 200);
-        } else {
+        $validator = $request->validate([
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+//        dd(auth()->attempt(['email' => request('email'), 'password' => \request('password')]));
+        if (!auth()->attempt($validator)) {
             return response()->json(['error' => 'Unauthorised'], 401);
+        } else {
+            $success['token'] = auth()->user()->createToken('authToken')->accessToken;
+            $success['user'] = auth()->user();
+            return response()->json(['success' => $success])->setStatusCode(200);
         }
 
     }
@@ -114,12 +115,11 @@ class AuthController extends Controller
     public function logout()
     {
         if (Auth::check()) {
-            Auth::user()->token()->revoke();
-            return response()->json(['success' =>'logout_success'],200);
-        }else{
-            return response()->json(['error' =>'api.something_went_wrong'], 500);
+             Auth::user()->AauthAcessToken()->delete();
         }
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
-
 
 }

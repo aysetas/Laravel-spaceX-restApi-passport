@@ -5,8 +5,7 @@ namespace App\Repository\Eloquent;
 use App\Models\Capsule;
 
 use App\Repository\CapsuleRepositoryInterface;
-use App\Repository\Eloquent\BaseRepository;
-use PHPUnit\TextUI\Exception;
+
 
 
 class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInterface
@@ -21,16 +20,16 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
 
     public function listFilterCapsule()
     {
-        $capsule = $this->capsule->with('missions')->get();
-        if (request()->get('status')) {
-            $capsule = $capsule->where('status', 'like', request()->get('status'));
+        $capsule = $this->capsule->with('missions') ->orderBy('original_launch_unix', 'ASC')->paginate(10);
+        if (request()->status) {
+            $capsule = $capsule->where('status', 'like', request()->status);
         }
         return response($capsule, 200);
     }
 
     public function showCapsule($capsule_serial)
     {
-        $capsule= $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->get();
+        $capsule= $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->first();
         return response([
             'data' => $capsule,
         ], 200);

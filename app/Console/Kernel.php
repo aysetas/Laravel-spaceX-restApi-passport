@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\DatabaseSync;
+
+use App\Console\Commands\DatabaseSyncCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,11 +16,11 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected $commands = [
-        DatabaseSync::class,
+        DatabaseSyncCommand::class,
     ];
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('database:sync')->everyThreeMinutes();
+        $schedule->command('db:sync')->everyThreeMinutes();
     }
 
     /**

@@ -21,14 +21,13 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-});
 
+Route::post('login', [AuthController::class, 'login'])->name('api.login');
+Route::post('register', [AuthController::class, 'register'])->name('api.register');;
 
-Route::group(['middleware'=>'auth:api'],function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::apiResource('/capsules', CapsuleController::class, ['index', 'show']);
-});
+//
+//Route::group(['middleware'=>'auth:sanctum'],function () {
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::apiResource('/capsules', CapsuleController::class, ['only' =>['index', 'show']]);
+//});
 
