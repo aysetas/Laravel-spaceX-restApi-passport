@@ -22,13 +22,13 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', [AuthController::class, 'login'])->name('login');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
-
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
-//Route::middleware('auth:api')->group(function () {
+
+Route::group(['middleware'=>'auth:api'],function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource('/capsules', CapsuleController::class, ['index', 'show']);
-//});
+});
 

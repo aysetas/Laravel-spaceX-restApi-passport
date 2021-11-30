@@ -43,10 +43,23 @@ class AuthController extends Controller
      *      @OA\Response(response="200", description="Register a user.", @OA\JsonContent()),
      * )
      */
-    public function register(AuthRegisterRequest $request)
+    public function register(Request $request)
     {
-        User::create($request->validated());
-        return response()->json(['message' => 'Successfully created']);
+        $this->validate($request, [
+            'name' => 'required|min:4',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' =>$request->password
+        ]);
+
+        $token = $user->createToken('LaravelAuthApp')->accessToken;
+
+        return response()->json(['token' => $token], 200);
     }
     /**
      * @OA\Post (
@@ -69,11 +82,14 @@ class AuthController extends Controller
      */
     public function login(AuthLoginRequest $request)
     {
-        $credentials = request(['email', 'password']);
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $tokenResult = $user->createToken('MyApp')->accessToken;
-            return response(['user' => $user, 'tokenResult' =>  $tokenResult->token]);
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (auth()->attempt($data)) {
+            $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
+            return response()->json(['token' => $token->token], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -97,8 +113,12 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        Auth::logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        if (Auth::check()) {
+            Auth::user()->token()->revoke();
+            return response()->json(['success' =>'logout_success'],200);
+        }else{
+            return response()->json(['error' =>'api.something_went_wrong'], 500);
+        }
     }
 
 
