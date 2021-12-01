@@ -1,9 +1,9 @@
-### 1. Downloade Project
+## 1. Downloade Project
 Run this at the command line<br>
-   ```bash
-    https://github.com/aysetas/laravel-spaceX-restApi-passport.git
-   ```
-### 2. Install Laravel
+```bash
+https://github.com/aysetas/laravel-spaceX-restApi-passport.git
+```
+## 2. Install Laravel
 - For laravel packages and dependencies.
 ```bash
 Composer install
@@ -12,55 +12,55 @@ Composer install
 
 - For passport
 ```bash
- php artisan passport:install
+php artisan passport:install
 ```
--  For generate app key.
+- For generate app key.
 ```bash
 php artisan key:generate
 ``` 
 
 - For generate database
- ```bash
+```bash
 php artisan migrate 
 ``` 
 ## 3.Run The Project
 
 - To run in browser
- ```bash
+```bash
 php artisan serve
 ``` 
 - To run in Swagger
- ```bash
+```bash
 php artisan l5-swagger:generate
- ``` 
+``` 
 - To run in Test
- ```bash
- php artisan test 
- ``` 
+```bash
+php artisan test 
+``` 
 or
- ```bash
- "./vendor/bin/phpunit"
- ```
+```bash
+"./vendor/bin/phpunit"
+```
 ## 4. Example Endpoinds
 
-Name | Link
------------- | -------------
-Get All Capsules API | https://api.spacexdata.com/v3/capsules
-Get Capsules By Status API | https://api.spacexdata.com/v3/capsules?status=active
-Get Capsule By Serial API | https://api.spacexdata.com/v3/capsules/C112
+   Name | Link
+   ------------ | -------------
+   Get All Capsules API | https://api.spacexdata.com/v3/capsules
+   Get Capsules By Status API | https://api.spacexdata.com/v3/capsules?status=active 
+   Get Capsule By Serial API | https://api.spacexdata.com/v3/capsules/C112
 
 ## 5. Test Used
 
-- #### Unit
-- #### Integration
+  - #### Unit
+  - #### Integration
 
 ## 6. Package Used
 
-- **[Passport](https://laravel.com/docs/8.x/passport)**
-- **[Swagger](https://github.com/DarkaOnLine/L5-Swagger/wiki/Installation-&-Configuration)**
+  - **[Passport](https://laravel.com/docs/8.x/passport)**
+  - **[Swagger](https://github.com/DarkaOnLine/L5-Swagger/wiki/Installation-&-Configuration)**
 
 ## 7. Technologies Used
 
-- PHP Laravel Framework
-- Mysql
-- Heroku
+  - PHP Laravel Framework
+  - Mysql
+  - Heroku
