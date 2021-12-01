@@ -14,10 +14,10 @@ class CammandTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testDatabaseSyncCommand()
     {
         $this->artisan('db:sync')
             ->expectsOutput('Capsule data imported')
             ->assertExitCode(0);
-    }
+    }git
 }
