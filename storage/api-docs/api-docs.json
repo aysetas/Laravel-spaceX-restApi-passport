@@ -5,12 +5,12 @@
         "version": "0.1"
     },
     "paths": {
-        "/api/auth/register": {
+        "/api/register": {
             "post": {
                 "tags": [
                     "auth"
                 ],
-                "operationId": "d43ecdfd17aca209ecd9b0a8b370e2c0",
+                "operationId": "58fe5a217ef88ae75e9b530a5e5817d1",
                 "parameters": [
                     {
                         "name": "name",
@@ -49,12 +49,12 @@
                 }
             }
         },
-        "/api/auth/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "auth"
                 ],
-                "operationId": "be2e78e5f93182d4403f839cc516d312",
+                "operationId": "ea134134deae11eb974c719450ef8a02",
                 "parameters": [
                     {
                         "name": "email",
@@ -81,7 +81,7 @@
                 }
             }
         },
-        "/api/auth/logout": {
+        "/api/logout": {
             "post": {
                 "tags": [
                     "auth"

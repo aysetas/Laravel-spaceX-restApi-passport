@@ -14,7 +14,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post (
-     *     path="/api/auth/register",
+     *     path="/api/register",
      *     tags={"auth"},
      *     @OA\Parameter(
      *          name="name",
@@ -63,7 +63,7 @@ class AuthController extends Controller
     }
     /**
      * @OA\Post (
-     *     path="/api/auth/login",
+     *     path="/api/login",
      *     tags={"auth"},
      *     @OA\Parameter(
      *          name="email",
@@ -97,7 +97,7 @@ class AuthController extends Controller
 
     }
     /**
-     * @OA\Post (path="/api/auth/logout",
+     * @OA\Post (path="/api/logout",
      *   tags={"auth"},
      *   summary="Logs out current logged in user session",
      *   description="",

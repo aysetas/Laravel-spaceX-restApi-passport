@@ -20,7 +20,7 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
 
     public function listFilterCapsule()
     {
-        $capsule = $this->capsule->with('missions') ->orderBy('original_launch_unix', 'ASC')->paginate(10);
+        $capsule = $this->capsule->with('missions') ->get();
         if (request()->status) {
             $capsule = $capsule->where('status', 'like', request()->status);
         }
@@ -29,7 +29,7 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
 
     public function showCapsule($capsule_serial)
     {
-        $capsule= $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->first();
+        $capsule= $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->get();
         return response([
             'data' => $capsule,
         ], 200);

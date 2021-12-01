@@ -5,21 +5,10 @@ namespace Tests\Feature;
 use App\Models\Capsule;
 use App\Services\CapsuleService;
 
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CapsuleEndpointsTest extends TestCase
 {
-    protected $capsuleService;
-    protected $capsule;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->capsuleService = $this->app->make(CapsuleService::class);
-        $this->capsule = $this->app->make(Capsule::class);
-    }
-
     /**
      * A basic feature test example.
      *
@@ -27,7 +16,7 @@ class CapsuleEndpointsTest extends TestCase
      */
     public function testListCapsule()
     {
-        $this->withoutMiddleware();
+//        $this->withoutMiddleware();
         $structure=  [
             'data' => [
             'original' => [
@@ -63,7 +52,7 @@ class CapsuleEndpointsTest extends TestCase
 
     public function testFilterCapsule()
     {
-        $this->withoutMiddleware();
+//        $this->withoutMiddleware();
         $structure=  [
             'data' => [
                 'original' => [
@@ -104,7 +93,7 @@ class CapsuleEndpointsTest extends TestCase
 
     public function testShowCapsule()
     {
-        $this->withoutMiddleware();
+//        $this->withoutMiddleware();
         $structure=  [
             'data' => [
                 'original' => [
