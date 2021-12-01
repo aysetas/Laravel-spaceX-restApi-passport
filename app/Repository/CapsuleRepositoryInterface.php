@@ -8,5 +8,6 @@ interface CapsuleRepositoryInterface
 {
     public function listFilterCapsule();
     public function showCapsule($capsule_serial);
+    public function databaseSync();
 
 }

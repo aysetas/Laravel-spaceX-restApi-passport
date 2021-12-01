@@ -24,6 +24,9 @@ class CapsuleService
     {
         return $this->capsuleRepository->showCapsule($capsule_serial);
     }
+    public function databaseSync(){
+        return $this->capsuleRepository->databaseSync();
+    }
 
 
 
