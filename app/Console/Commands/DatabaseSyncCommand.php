@@ -8,8 +8,10 @@ use App\Models\Capsule;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Support\Facades\Http;
 
 class DatabaseSyncCommand extends Command
 {
@@ -49,32 +51,33 @@ class DatabaseSyncCommand extends Command
 
         try {
             event(new SyncStartedEvent());
-            $client = new Client();
-            $res = $client->request('GET','https://api.spacexdata.com/v3/capsules')->getBody();
-            $clientdatas = json_decode($res->getContents(), true);
+//            $client = new Client();
+//            $res = $client->request('GET','https://api.spacexdata.com/v3/capsules')->getBody();
+            $res = Http::get('https://api.spacexdata.com/v3/capsules')->json();
+            $clientdatas = $res;
+//            $clientdatas = json_decode($res->getContents(), true);
 
-            foreach($clientdatas as $clientdata)
-            {
-                $data=Capsule::updateOrCreate([
-                    'capsule_serial' => $clientdata->capsule_serial,
+            foreach ($clientdatas as $clientdata) {
+                $data = Capsule::updateOrCreate([
+                    'capsule_serial' => $clientdata['capsule_serial'],
                 ],
                     [
-                        'capsule_id' => $clientdata->capsule_id,
-                        'status' => $clientdata->status,
-                        'original_launch' =>Carbon::parse($clientdata['original_launch'])->toDateString(),
-                        'original_launch_unix' => $clientdata->original_launch_unix,
-                        'landings' => $clientdata->landings,
-                        'type' => $clientdata->type,
-                        'details' => $clientdata->details,
-                        'reuse_count' => $clientdata->reuse_count,
+                        'capsule_id' => $clientdata['capsule_id'],
+                        'status' => $clientdata['status'],
+                        'original_launch' => Carbon::parse($clientdata['original_launch'])->toDateString(),
+                        'original_launch_unix' => $clientdata['original_launch_unix'],
+                        'landings' => $clientdata['landings'],
+                        'type' => $clientdata['type'],
+                        'details' => $clientdata['details'],
+                        'reuse_count' => $clientdata['reuse_count'],
                     ]);
-                foreach ($clientdata->missions as $mission) {
+                foreach ($clientdata['missions'] as $mission) {
                     $data->missions()->updateOrCreate(
                         [
-                            'flight' => $mission->flight,
+                            'flight' => $mission['flight'],
                         ],
                         [
-                            'name' => $mission->name,
+                            'name' => $mission['name'],
                         ],
                     );
                 }
@@ -82,6 +85,7 @@ class DatabaseSyncCommand extends Command
             DB::commit();
             event(new SyncCompletedEvent($clientdatas));
             $this->info('Success');
+            $this->line('Capsule data imported');
         } catch (Exception $e) {
             DB::rollback();
             $this->error($e->getMessage());

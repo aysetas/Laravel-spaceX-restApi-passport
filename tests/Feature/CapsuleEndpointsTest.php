@@ -16,7 +16,7 @@ class CapsuleEndpointsTest extends TestCase
      */
     public function testListCapsule()
     {
-//        $this->withoutMiddleware();
+        $this->withoutMiddleware();
         $structure=  [
             'data' => [
             'original' => [
@@ -52,7 +52,7 @@ class CapsuleEndpointsTest extends TestCase
 
     public function testFilterCapsule()
     {
-//        $this->withoutMiddleware();
+        $this->withoutMiddleware();
         $structure=  [
             'data' => [
                 'original' => [
@@ -93,7 +93,7 @@ class CapsuleEndpointsTest extends TestCase
 
     public function testShowCapsule()
     {
-//        $this->withoutMiddleware();
+        $this->withoutMiddleware();
         $structure=  [
             'data' => [
                 'original' => [

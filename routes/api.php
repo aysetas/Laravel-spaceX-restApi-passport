@@ -26,8 +26,8 @@ Route::post('login', [AuthController::class, 'login'])->name('api.login');
 Route::post('register', [AuthController::class, 'register'])->name('api.register');;
 
 //
-//Route::group(['middleware'=>'auth:api'],function () {
+Route::group(['middleware'=>'auth:api'],function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource('/capsules', CapsuleController::class, ['only' =>['index', 'show']]);
-//});
+});
 
